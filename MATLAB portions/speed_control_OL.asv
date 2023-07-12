@@ -1,0 +1,21 @@
+K=0.205724771;
+Ra=7.326161;
+J=2.384*(10^(-4));
+bv=1.942041667;
+bm=0.000413802;
+M=0.367;
+num_m = [K 0];
+den_m = [(J*Ra) (bm*Ra) (K^2)];
+M_s = tf(num_m, den_m)
+den_v= [M bv];
+V_s = tf(2, den_v)
+speed_sys = series(M_s, V_s)
+hold on;
+rlocus(speed_sys)
+figure
+bode(speed_sys)
+figure
+Tfinal=10;
+step(speed_sys,Tfinal)
+ramp_sys=series(tf(1,[1 0]),speed_sys)
+step(speed_sys,Tfinal)
